@@ -44,21 +44,18 @@ class HighscoresController {
         task.resume()
     }
     
-    func addHighscore(name: String, score: String) -> Void {
+    func addHighscore(name: String, score: String, completion: @escaping () -> Void) {
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         let postString = "name=\(name)&score=\(score)"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            completion()
+
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
 //                print("error=\(error)")
                 return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-//                print("response = \(response)")
             }
         }
         task.resume()

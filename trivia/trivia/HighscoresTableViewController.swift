@@ -20,6 +20,9 @@ class HighscoresTableViewController: UITableViewController {
                 print("HALLO")
                 self.highscoresList = highScores
                 print("INFUNC \(self.highscoresList)")
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
         print("OUTFUNC \(self.highscoresList)")

@@ -65,12 +65,8 @@ class ResultTableViewController: UITableViewController {
     }
     
     func uploadHighscore(name: UITextField) {
-        HighscoresController.shared.addHighscore(name: name.text!, score: String(self.score))
-        performSegue()
-    }
-    
-    func performSegue() {
-        self.performSegue(withIdentifier: "PostScoreSegue", sender: nil)
+        HighscoresController.shared.addHighscore(name: name.text!, score: String(self.score)) { DispatchQueue.main.async {self.performSegue(withIdentifier: "PostScoreSegue", sender: nil)} }
+        
     }
     
     @IBAction func postScoreTapped(_ sender: Any) {
