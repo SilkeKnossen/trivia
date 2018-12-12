@@ -64,16 +64,16 @@ class ResultTableViewController: UITableViewController {
         }
     }
     
-    func uploadHighscore(name: UITextField) {
-        HighscoresController.shared.addHighscore(name: name.text!, score: String(self.score)) { DispatchQueue.main.async {self.performSegue(withIdentifier: "PostScoreSegue", sender: nil)} }
-        
+    func uploadHighscore() {
+        DispatchQueue.main.async {self.performSegue(withIdentifier: "PostScoreSegue", sender: nil)}
     }
     
     @IBAction func postScoreTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Confirm score upload", message: "You are about to upload your score (\(self.score)). To upload your score, please fill in your name. You will not be able to return to this screen.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Upload", style: .default, handler: { action in
-            let name = alert.textFields![0]
-            self.uploadHighscore(name: name)
+            let enteredName = alert.textFields![0]
+            self.name = enteredName.text!
+            self.uploadHighscore()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -81,4 +81,11 @@ class ResultTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PostScoreSegue" {
+            let highscoresTableViewController = segue.destination as! HighscoresTableViewController
+            highscoresTableViewController.name = self.name
+            highscoresTableViewController.score = self.score
+        }
+    }
 }

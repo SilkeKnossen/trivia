@@ -11,32 +11,41 @@ import UIKit
 class HighscoresTableViewController: UITableViewController {
 
     var highscoresList = [highscore]()
+    var name = String()
+    var score = Int()
     
     override func viewDidLoad() {
         navigationItem.hidesBackButton = true
         super.viewDidLoad()
-        HighscoresController.shared.fetchHighscores { (highscores) in
-            if let highScores = highscores {
-                print("HALLO")
-                self.highscoresList = highScores
-                print("INFUNC \(self.highscoresList)")
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+//        HighscoresController.shared.fetchHighscores { (highscores) in
+//            if let highScores = highscores {
+//                self.highscoresList = highScores
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
+        HighscoresController.shared.addHighscore(name: self.name, score: String(self.score)) {
+            HighscoresController.shared.fetchHighscores { (highscores) in
+                if let highScores = highscores {
+                    self.highscoresList = highScores
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
-        print("OUTFUNC \(self.highscoresList)")
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("OUTFUNC \(self.highscoresList)")
         return self.highscoresList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let rankedHighscores = self.highscoresList.sorted { ($0.score > $1.score) }
         let cell = tableView.dequeueReusableCell(withIdentifier: "scoreCell", for: indexPath)
-        cell.textLabel?.text = self.highscoresList[indexPath.row].name
-        cell.detailTextLabel?.text = self.highscoresList[indexPath.row].score
+        cell.textLabel?.text = rankedHighscores[indexPath.row].name
+        cell.detailTextLabel?.text = rankedHighscores[indexPath.row].score
         return cell
     }
 

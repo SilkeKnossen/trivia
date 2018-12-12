@@ -12,20 +12,6 @@ class HighscoresController {
     
     static let shared = HighscoresController()
     let url = URL(string: "https://ide50-silkeknossen.cs50.io:8080/list")!
-//    var request = URLRequest(url: shared.url)
-    
-//    func fetchHighscores() -> Void {
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            let decoder = JSONDecoder()
-//            if let data = data,
-//                let json = try? decoder.decode([[String: String]].self, from: data) {
-//                print(json)
-//            } else {
-//                print("nothing")
-//            }
-//        }
-//        task.resume()
-//    }
     
     func fetchHighscores(completion: @escaping ([highscore]?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
