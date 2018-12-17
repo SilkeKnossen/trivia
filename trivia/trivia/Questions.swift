@@ -9,6 +9,9 @@
 import Foundation
 import HTMLString
 
+/*
+ * Struct of a question, used to store the data fetched from the Trivia API.
+ */
 struct Question {
     var category: String
     var type: String
@@ -33,9 +36,11 @@ struct Question {
         self.correctAnswer = correctAnswer.removingHTMLEntities
         self.allAnswers = allAnswers
         
+        // Generate random iteger and append the correct answer to the list of all answers.
         let index = Int.random(in: 0 ... 3)
         self.allAnswers.insert(self.correctAnswer, at: index)
         
+        // Remove HTML entities in all answers.
         let lastIndex = self.allAnswers.count - 1
         for i in 0...lastIndex {
             self.allAnswers[i] = self.allAnswers[i].removingHTMLEntities

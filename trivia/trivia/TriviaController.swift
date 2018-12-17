@@ -8,11 +8,18 @@
 
 import Foundation
 
+/* This is the controller to communicate with the Trivia API.
+ * It fetches the questions for the game.
+ */
 class TriviaController {
     
+    // Create an URL to fetch data from.
     let url = URL(string: "https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")!
+    
+    // Make this controller static.
     static let shared = TriviaController()
     
+    // Fetch questions, decode them and store the data into the Question struct.
     func fetchTriviaData(completion: @escaping ([Question]?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data,

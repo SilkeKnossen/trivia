@@ -8,8 +8,12 @@
 
 import UIKit
 
+/*
+ * Create custom class for the result table view.
+ */
 class AnswerTableViewCell: UITableViewCell {
 
+    // Create all outlets.
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!

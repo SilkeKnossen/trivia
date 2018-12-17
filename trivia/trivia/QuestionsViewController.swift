@@ -10,17 +10,26 @@ import UIKit
 
 class QuestionsViewController: UIViewController {
 
+    // Create all outlets.
     @IBOutlet weak var questionLabel: UILabel!
+    
     @IBOutlet weak var answerButton1: UIButton!
     @IBOutlet weak var answerButton2: UIButton!
     @IBOutlet weak var answerButton3: UIButton!
     @IBOutlet weak var answerButton4: UIButton!
+    
     @IBOutlet weak var progressView: UIProgressView!
     
+    // Initialize an array of questions.
     var questions = [Question]()
+    
+    // Initialize current question.
     var questionIndex = 0
+    
+    // Initialize array of chosen answers.
     var answersChosen: [String] = []
     
+    // When the view did load, fetch the questions and store them, then update the UI.
     override func viewDidLoad() {
         super.viewDidLoad()
         TriviaController.shared.fetchTriviaData { (questions) in
@@ -31,6 +40,7 @@ class QuestionsViewController: UIViewController {
         }
     }
     
+    // Update the outlets in the view with question details.
     func updateUI() {
         DispatchQueue.main.async {
             let currentQuestion = self.questions[self.questionIndex]
@@ -48,6 +58,7 @@ class QuestionsViewController: UIViewController {
         }
     }
     
+    // Go to next question if there is one, otherwise go to the result view.
     func nextQuestion() {
         questionIndex += 1
         
@@ -58,6 +69,7 @@ class QuestionsViewController: UIViewController {
         }
     }
     
+    // If an answer button is pressed, append the answer to the player's chosen answers array.
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         let currentAnswers = questions[questionIndex].allAnswers
         
@@ -76,6 +88,7 @@ class QuestionsViewController: UIViewController {
         nextQuestion()
     }
     
+    // Give the questions and answers chosen to the result view controller.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ResultSegue" {
             let resultTableViewController = segue.destination as! ResultTableViewController

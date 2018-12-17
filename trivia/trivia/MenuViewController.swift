@@ -10,15 +10,15 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
+    // Load view.
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // Make unwinding to this view possible.
     @IBAction func unwindToMenuView(segue:
         UIStoryboardSegue) {
-        
     }
-
 
 }
 
